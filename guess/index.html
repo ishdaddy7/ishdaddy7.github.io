@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang='en'>
+	<head>
+		<link rel='stylesheet' href='style.css'>
+    <link href='https://fonts.googleapis.com/css?family=Work+Sans' rel='stylesheet' type='text/css'>
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js'></script>
+    <script src='application.js'></script>
+	</head>
+
+	<body>
+    <div class = 'line'></div>
+    <div class= 'line line2'></div>
+		<main>
+  			<header>GUESS A NUMBER</header>
+        <hr>
+  			<section class='player'>
+    			<h4>PLAYER</h4>
+    			<div class='input'>
+          			<input type='search' class='playersguess' name='input' placeholder='Enter a number from 1-100'>   
+    			</div>
+   				 <div class='buttons'>
+     				  <input type='button' class='button submit' value='Submit Guess >'>
+      				<input type='button' class='button reset' value='Reset Game >' >
+              <input type='button' class='button hint' value='Hint >'>
+    			</div>
+  				</section>
+  			<section class = 'computer'>
+   				<h4>COMPUTER</h4>
+          <section class = 'labels'>
+            <div class = 'shortlabel shortlabel1'>
+              <div class='label'>GUESSES REMAINING</div>
+              <div class='box guesscount'>--</div>
+            </div>
+            <div class = 'shortlabel shortlabel2'>
+              <div class='label'>YOUR GUESSES</div>
+              <div class='box guess'>--</div>
+            </div>
+             <div class = 'shortlabel shortlabel1'>
+              <div class='label'>HINTS</div>
+              <div class='box hint-display'>Press "Hint >" for suggested guesses</div>
+            </div>
+            <div class = 'shortlabel shortlabel2'>
+              <div class='label'>STATUS</div>
+              <div class='box status'>Waiting...</div>
+             </div> 
+          </section>
+			</section>
+      <div id = 'winner'></div>
+		</main>
+	</body>
+</html>
