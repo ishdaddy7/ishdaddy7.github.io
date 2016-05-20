@@ -142,7 +142,7 @@ function gameOver(playersGuessEl, message){
 }
 
 // Reset everything
-function playAgain(game){
+function playAgain(){
 	// add code here
 	$('header').slideDown().animate({'font-size': '32px'}, 'fast').animate({'font-size': '30px'}, 'fast');
 	$('.guess').text('--');
@@ -152,7 +152,8 @@ function playAgain(game){
 	$('.playersguess').val('').attr('placeholder','Enter a number from 1-100');
 	$('.submit').prop('disabled',false);
 	$('.hint').prop('disabled',false);	
-	game = new Game();
+	//game = new Game() // having this here didn't work - the game var gets reset to a new Game object in this scope, but not the outer. So I have to do it from line 197. But since objects are passed by refence, and game is not local to this function, shouldn't it have just updated the game var's reference in the outer scope to the new object?
+	//console.log(game);
 }
 
 // Check if the Player's Guess is the winning number 
@@ -193,7 +194,8 @@ $(document).ready(function(){
 
 	//reset all the fields if the user resets
 	$('.reset').on('click', function(){
-		playAgain(game);
+		playAgain();
+		game = new Game(); // i tried doing this in line 155 as part of playAgain, but it only reset game in playAgain's scope. That doesn't make sense to me though... see line 155 for more. Any thoughts?
 	});
 });
 
