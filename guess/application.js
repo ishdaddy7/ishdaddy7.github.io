@@ -152,8 +152,8 @@ function playAgain(){
 	$('.playersguess').val('').attr('placeholder','Enter a number from 1-100');
 	$('.submit').prop('disabled',false);
 	$('.hint').prop('disabled',false);	
-	//game = new Game() // having this here didn't work - the game var gets reset to a new Game object in this scope, but not the outer. So I have to do it from line 197. But since objects are passed by refence, and game is not local to this function, shouldn't it have just updated the game var's reference in the outer scope to the new object?
-	//console.log(game);
+	//game = new Game() // ok, I think I answered my own question. The "game" var from 173 is local to the callback for $(document).ready, and gets closed over by the event handlers nested within e.g. line 177 for playersGuessSubmission. I'm passing the closed variable into the playersGuesssubmission by reference, allowing its properties to be mutated in those functions. But if I declare "game = new Game()" in this line, it's a new variable declaration in the global scope. It's not the same local "game" var as from 173, so it basically gets ignored and won't reset the closed var 'game'. Right?
+	//debugger;
 }
 
 // Check if the Player's Guess is the winning number 
@@ -170,23 +170,27 @@ $(document).ready(function(){
 	//initial set up
 	$('header').slideDown().animate({'font-size': '32px'}, 'fast').animate({'font-size': '30px'}, 'fast');
 	var game = new Game();
+	//debugger;
 	$('.guesscount').text(game.remainingGuesses);
 
 	//all things when you click submit
 	$('.submit').click(function(){
 		playersGuessSubmission(game);
+		//debugger;
 	});
 
 	//all things when you click enter
 	$('.playersguess').keydown(function(e){
 		if(e.which == 13){
 			playersGuessSubmission(game);
+			//debugger;
 		}
 	});
 	//all the things when you click hint
 	$('.hint').on('click', function(){
 		if(game.remainingGuesses<10)
 			provideHint(game);
+			//debugger;
 		else{
 			$('.hint-display').text("Please make a guess first");
 		}
@@ -194,8 +198,9 @@ $(document).ready(function(){
 
 	//reset all the fields if the user resets
 	$('.reset').on('click', function(){
-		playAgain();
-		game = new Game(); // i tried doing this in line 155 as part of playAgain, but it only reset game in playAgain's scope. That doesn't make sense to me though... see line 155 for more. Any thoughts?
+		playAgain(game);
+		game = new Game(); // i tried doing this in line 155 as part of playAgain, but I realize now that even though "game" has been closed over here, declareing the "game" var in 155 sets a new var in the global scope. It doesn't actually change this instance of game. I think anyway...
+		//debugger;
 	});
 });
 
